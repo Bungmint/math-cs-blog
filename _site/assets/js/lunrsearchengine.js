@@ -18,7 +18,7 @@ var documents = [{
     "id": 3,
     "url": "http://localhost:4000/math-cs-blog/",
     "title": "Home",
-    "body": "   Featured:          All Stories:                                                     First Post              :       :                               05 Jan 2023        &lt;/span&gt;                                   "
+    "body": "   Featured:          All Posts:                                                     First Post              :       :                               05 Jan 2023        &lt;/span&gt;                                   "
     }, {
     "id": 4,
     "url": "http://localhost:4000/math-cs-blog/robots.txt",
