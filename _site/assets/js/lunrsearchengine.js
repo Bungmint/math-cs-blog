@@ -28,7 +28,7 @@ var documents = [{
     "id": 5,
     "url": "http://localhost:4000/math-cs-blog/first-post/",
     "title": "First Post",
-    "body": "2023/01/05 - Hello! "
+    "body": "2023/01/05 - Hello! [1 + 1 = 2] "
     }];
 
 var idx = lunr(function () {
