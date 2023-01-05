@@ -109,6 +109,10 @@
               <a class="nav-link" href="{{ site.baseurl }}/about">About</a>
             </li>
 
+            <li class="nav-item">
+              <a class="nav-link" href="{{ site.baseurl }}/tags">Tags</a>
+            </li>
+
             {% include search-lunr.html %}
           </ul>
 
@@ -133,7 +137,7 @@
         <div class="main-content">{{ content }}</div>
       </div>
 
-      <!-- Categories Jumbotron
+      <!-- Tags Jumbotron
 ================================================== -->
       <div class="jumbotron fortags">
         <div class="d-md-flex h-100">
@@ -147,21 +151,20 @@
             </div>
           </div>
           <div class="col-md-8 p-5 align-self-center text-center">
-            {% assign categories_list = site.categories %} {% if
-            categories_list.first[0] == null %} {% for category in
-            categories_list %}
+            {% assign tags_list = site.tags %} {% if tags_list.first[0] == null
+            %} {% for tag in tags_list %}
             <a
               class="mt-1 mb-1"
-              href="{{site.baseurl}}/categories#{{ category | url_escape | strip | replace: ' ', '-' }}"
-              >{{ category | camelcase }} ({{ site.tags[category].size }})</a
+              href="{{site.baseurl}}/tags#{{ tag | url_escape | strip | replace: ' ', '-' }}"
+              >{{ tag | camelcase }} ({{ site.tags[tag].size }})</a
             >
-            {% endfor %} {% else %} {% for category in categories_list %}
+            {% endfor %} {% else %} {% for tag in tags_list %}
             <a
               class="mt-1 mb-1"
-              href="{{site.baseurl}}/categories#{{ category[0] | url_escape | strip | replace: ' ', '-' }}"
-              >{{ category[0] | camelcase }} ({{ category[1].size }})</a
+              href="{{site.baseurl}}/tags#{{ tag[0] | url_escape | strip | replace: ' ', '-' }}"
+              >{{ tag[0] | camelcase }} ({{ tag[1].size }})</a
             >
-            {% endfor %} {% endif %} {% assign categories_list = nil %}
+            {% endfor %} {% endif %} {% assign tags_list = nil %}
           </div>
         </div>
       </div>
