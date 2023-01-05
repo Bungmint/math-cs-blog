@@ -211,7 +211,7 @@
                 <!-- Toc if any -->
                 
                 <!-- End Toc -->
-                
+                <p>Hello!</p>
 
             </div>
 
@@ -303,8 +303,7 @@ https://search.google.com/structured-data/testing-tool/u/0/
                 src="/math-cs-blog/assets/images/logo.png"
                 alt="Youngmin's Blog"
               />
-              &nbsp; Never miss a <b>story</b> from us, subscribe to our
-              newsletter</span
+              &nbsp; Subscribe to get notified when a new post comes out</span
             >
             <form
               action="https://wowthemes.us11.list-manage.com/subscribe/post?u=8aeb20a530e124561927d3bd8&amp;id=8c3d2d214b"
@@ -332,6 +331,14 @@ https://search.google.com/structured-data/testing-tool/u/0/
                 />
               </div>
             </form>
+            <a class="close-btn"></a>
+            <script>
+              $(document).ready(function () {
+                $(".close-btn").click(function () {
+                  $(".alertbar").remove();
+                });
+              });
+            </script>
           </div>
         </div>
         

@@ -18,7 +18,7 @@ var documents = [{
     "id": 3,
     "url": "http://localhost:4000/math-cs-blog/",
     "title": "Home",
-    "body": "   Featured:          All Posts:                                                     First Post              :       :                               05 Jan 2023        &lt;/span&gt;                                   "
+    "body": "   Featured:                                                                           First Post               :                Hello!       :                                     05 Jan 2023        &lt;/span&gt;                                                            All Posts:                                                     First Post              :       Hello!:                               05 Jan 2023        &lt;/span&gt;                                   "
     }, {
     "id": 4,
     "url": "http://localhost:4000/math-cs-blog/robots.txt",
@@ -28,7 +28,7 @@ var documents = [{
     "id": 5,
     "url": "http://localhost:4000/math-cs-blog/first-post/",
     "title": "First Post",
-    "body": "2023/01/05 - "
+    "body": "2023/01/05 - Hello! "
     }];
 
 var idx = lunr(function () {

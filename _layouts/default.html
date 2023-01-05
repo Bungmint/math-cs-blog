@@ -142,8 +142,7 @@
                 src="{{ site.baseurl }}/{{ site.logo }}"
                 alt="{{site.title}}"
               />
-              &nbsp; Never miss a <b>story</b> from us, subscribe to our
-              newsletter</span
+              &nbsp; Subscribe to get notified when a new post comes out</span
             >
             <form
               action="{{site.mailchimp-list}}"
@@ -171,6 +170,14 @@
                 />
               </div>
             </form>
+            <a class="close-btn"></a>
+            <script>
+              $(document).ready(function () {
+                $(".close-btn").click(function () {
+                  $(".alertbar").remove();
+                });
+              });
+            </script>
           </div>
         </div>
         {% endif %}
