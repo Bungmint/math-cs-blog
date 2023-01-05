@@ -4,7 +4,7 @@ title: About Me
 permalink: /about
 ---
 
-Hello! Welcome to my blog. I am a first-year computer science major, double majoring with mathematics,
+Hello! Welcome to my blog. I am Youngmin Park, a first-year computer science major, double majoring with mathematics,
 at University of California, Berkeley. I usually go by the username Bungmint on many websites. This blog
 is a project of mine to jot down notes about anything mathematics/CS related (mainly about competitive programming);
 Here are some of my profiles on comeptitive programming websites:

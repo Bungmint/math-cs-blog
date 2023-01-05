@@ -8,7 +8,7 @@ var documents = [{
     "id": 1,
     "url": "http://localhost:4000/math-cs-blog/about",
     "title": "About Me",
-    "body": "Hello! Welcome to my blog. I am a first-year computer science major, double majoring with mathematics,at University of California, Berkeley. I usually go by the username Bungmint on many websites. This blogis a project of mine to jot down notes about anything mathematics/CS related (mainly about competitive programming);Here are some of my profiles on comeptitive programming websites:  Codeforces Atcoder dmojThis blog idea is deeply inspired by smax’s blog, so check his blog out, too!Also, this website is powered by Jekyll and uses the “Mediumish” theme. "
+    "body": "Hello! Welcome to my blog. I am Youngmin Park, a first-year computer science major, double majoring with mathematics,at University of California, Berkeley. I usually go by the username Bungmint on many websites. This blogis a project of mine to jot down notes about anything mathematics/CS related (mainly about competitive programming);Here are some of my profiles on comeptitive programming websites:  Codeforces Atcoder dmojThis blog idea is deeply inspired by smax’s blog, so check his blog out, too!Also, this website is powered by Jekyll and uses the “Mediumish” theme. "
     }, {
     "id": 2,
     "url": "http://localhost:4000/math-cs-blog/categories",
