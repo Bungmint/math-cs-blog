@@ -5,9 +5,40 @@
     <description>A math &amp; cs major trying to find meaning of life</description>
     <link>http://localhost:4000/math-cs-blog/</link>
     <atom:link href="http://localhost:4000/math-cs-blog/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Fri, 13 Jan 2023 22:41:52 -0800</pubDate>
-    <lastBuildDate>Fri, 13 Jan 2023 22:41:52 -0800</lastBuildDate>
+    <pubDate>Mon, 16 Jan 2023 10:21:58 -0800</pubDate>
+    <lastBuildDate>Mon, 16 Jan 2023 10:21:58 -0800</lastBuildDate>
     <generator>Jekyll v4.3.1</generator>
+    
+      <item>
+        <title>Aho-Corasick and Applications</title>
+        <description>&lt;p&gt;&lt;em&gt;Prerequisites:&lt;/em&gt; Aho-Corasick&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;Problems&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://codeforces.com/problemset/problem/1400/F&quot;&gt;CodeForces Edu Round 94 F&lt;/a&gt;&lt;/p&gt;
+
+&lt;details&gt;
+
+  &lt;summary&gt; Solution &lt;/summary&gt;
+
+  &lt;p&gt;Bruteforce + Aho-Corasick + DP&lt;/p&gt;
+
+  &lt;p&gt;Note that the maximum number of x-prime strings for $x \leq 20$ is $2399$ and the size of the
+automaton created by those strings is at most $5000$. If we let $m$ to be the size of the AC
+Automaton, we can get a simple $\mathcal{O}(|S|m)$ DP where a dp state $dp_{i, j}$ stores the
+minimum number of characters removed in the prefix $S[1\dots i]$, such that we have the resulting
+string ending up at vertex $j$ in the AC Automaton.&lt;/p&gt;
+
+&lt;/details&gt;
+</description>
+        <pubDate>Sun, 15 Jan 2023 00:00:00 -0800</pubDate>
+        <link>http://localhost:4000/math-cs-blog/Aho-Corasick-and-applications/</link>
+        <guid isPermaLink="true">http://localhost:4000/math-cs-blog/Aho-Corasick-and-applications/</guid>
+        
+        <category>string</category>
+        
+        
+      </item>
     
       <item>
         <title>First Post</title>
