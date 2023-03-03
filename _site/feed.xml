@@ -5,9 +5,97 @@
     <description>A math &amp; cs major trying to find meaning of life</description>
     <link>http://localhost:4000/math-cs-blog/</link>
     <atom:link href="http://localhost:4000/math-cs-blog/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Mon, 16 Jan 2023 10:21:58 -0800</pubDate>
-    <lastBuildDate>Mon, 16 Jan 2023 10:21:58 -0800</lastBuildDate>
+    <pubDate>Thu, 02 Mar 2023 21:30:47 -0800</pubDate>
+    <lastBuildDate>Thu, 02 Mar 2023 21:30:47 -0800</lastBuildDate>
     <generator>Jekyll v4.3.1</generator>
+    
+      <item>
+        <title>February Problem-solving</title>
+        <description>&lt;p&gt;&lt;a href=&quot;https://cses.fi/problemset/task/2181&quot;&gt;CSES Counting Tiles&lt;/a&gt;&lt;/p&gt;
+
+&lt;details style=&quot;margin-bottom: 5%&quot;&gt;
+
+  &lt;summary&gt;Solution&lt;/summary&gt;
+
+  &lt;p&gt;This technique is called “DP on broken profile”. Interesting to note that
+problem K from ICPC PACNW Regionals from today can also be solved using this technique
+(Thankfully, in the contest, I was able to solve it quite straightforwardly). This problem is easier as we only have to
+maintain a bitmask of which tiles are open. This allows a
+$O(nm2^n)$ solution. The dp states are $dp[i][j][mask]$, where
+$(i, j)$ is the corner, but since $dp[i][j]$ relies solely on
+$dp[i][j - 1]$, we can drop the first two dimensions leading
+to a $O(2^n)$ memory.&lt;/p&gt;
+
+&lt;/details&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://codeforces.com/contest/662/problem/C&quot;&gt;CodeForces 662C&lt;/a&gt;&lt;/p&gt;
+
+&lt;details style=&quot;margin-bottom: 5%&quot;&gt;
+
+  &lt;summary&gt;Solution&lt;/summary&gt;
+
+  &lt;p&gt;Bitmask DP + Finding the linear recurrence. We can first think of
+each column as a bitmask of length $n$, labeling them $col_1$,
+$col_2$, $\dots$, $col_m$. Then, the rows that are being inversed
+could be also represented as a bitmask of length $n$, denoted as
+$mask$. Then, we are calculating the $mask$ that minimizes the sum&lt;/p&gt;
+
+\[\sum_{i = 1}^{m} \min(pc(mask \oplus col_i), n - pc(mask \oplus col_i))\]
+
+  &lt;p&gt;where $pc$ is the popcount function. This takes $O(2^n m)$, which is very slow. In order to improve this, we define $dp[k][mask]$ to be the number of $col_i$ such that $pc(col_i, mask) = k$. We can easily calculate $dp[0][mask]$ in $O(m)$ as $mask$ has to equal $col_i$. Suppose $k &amp;gt; 0$, and $pc(col_i, mask) = k$. We can consider a position $p$, such that $col_i$ and $mask$ differs in. Then, there would be $dp[k - 1][mask \oplus 2^p]$ possible columns, but it could be possible that $col_i$ and $mask \oplus 2^p$ differs in position $p$ again, so we have to subtract $dp[k - 2][mask]$, and repeating this process, if $pmask$ denotes $mask \oplus 2^p$, we get&lt;/p&gt;
+
+\[dp[k - 1][pmask] - dp[k - 2][mask] + dp[k - 3][pmask] - \dots\]
+
+  &lt;p&gt;If we sum for all $0 \leq p \leq n - 1$, then we would count each $col_i$ $k$ times, so $k \cdot dp[k][mask]$. Hence,&lt;/p&gt;
+
+\[dp[k][mask] = \frac{1}{k} \sum_{p = 0}^{n - 1} \sum_{f = 1}^{k} (-1)^{f - 1} dp[k - f][mask \oplus (2^p \cdot (f \bmod 2))]\]
+
+  &lt;p&gt;There are $n \cdot 2^n$ states and $n^2$ per transition, yielding a $O(n^3 \cdot 2^n)$ which is still too slow. Note that&lt;/p&gt;
+
+\[\sum_{p = 0}^{n - 1} \sum_{f = 3}^{k} (-1)^{f - 1} dp[k - f][mask \oplus (2^p \cdot (f \bmod 2))]
+= (k - 2)dp[k - 2][mask]\]
+
+  &lt;p&gt;so&lt;/p&gt;
+
+\[dp[k][mask] = \frac{1}{k} \left((k - 2 - n)dp[k - 2][mask] +
+\sum_{p = 0}^{n - 1} dp[k - 1][mask \oplus 2^p]\right)\]
+
+  &lt;p&gt;yielding a $O(n)$ transition, hence, a $O(n^2 \cdot 2^n)$ solution.&lt;/p&gt;
+
+&lt;/details&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://oj.uz/problem/view/CEOI16_kangaroo&quot;&gt;CEOI 2016 Kangaroo&lt;/a&gt;&lt;/p&gt;
+
+&lt;details style=&quot;margin-bottom: 5%&quot;&gt;
+
+  &lt;summary&gt;Solution&lt;/summary&gt;
+
+  &lt;p&gt;Connected component DP. Note that the problem can be restated as counting the number of permutation $p_1$, $\dots$, $p_n$, such that $p_1 = cs$, $p_n = cf$, and for all $2 \leq i \leq n - 1$, either $p_{i - 1} &amp;lt; p_i &amp;gt; p_{i + 1}$ or $p_{i - 1} &amp;gt; p_i &amp;lt; p_{i + 1}$ holds. Then, we can proceed with the typical dp states $dp[i][j]$ which represents the number of correct permutations, partially filled with $1$ to $i$, that has $j$ connected components. We note that because we insert the elements in increasing order, we can only either merge two connected components or add an independent component. Obviously, the corner cases are when $i = cs$ or $i = cf$, but they are trivial. Thus, we get a $O(n^2)$ solution with $O(n)$ memory usage.&lt;/p&gt;
+
+&lt;/details&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://codeforces.com/problemset/problem/1634/F&quot;&gt;CodeForces 1634F&lt;/a&gt;&lt;/p&gt;
+
+&lt;details style=&quot;margin-bottom: 5%&quot;&gt;
+
+  &lt;summary&gt;Solution&lt;/summary&gt;
+
+  &lt;p&gt;Modified prefix sum. Consider $C_i = A_i - B_i$, and $D_1 = C_1$, $D_2 = C_2 - C_1$, $D_i =
+C_i - C_{i - 1} - C_{i - 2}$. Note that $A = B$ if and only if $D_i = 0$ for all $i$.
+Also, for each query $[l, r]$, only $D_l \mathrel{+}= 1$, $D_{r + 1} \mathrel{-}= F_{r - l + 2}$, $D_{r + 2} \mathrel{-}= F_{r - l + 1}$.
+So we can easily update $D$ by precomputing the Fibonacci numbers. Hence, we get a
+$O(N + Q)$ solution.&lt;/p&gt;
+
+&lt;/details&gt;
+</description>
+        <pubDate>Sat, 25 Feb 2023 00:00:00 -0800</pubDate>
+        <link>http://localhost:4000/math-cs-blog/February-problems/</link>
+        <guid isPermaLink="true">http://localhost:4000/math-cs-blog/February-problems/</guid>
+        
+        <category>problem-solving</category>
+        
+        
+      </item>
     
       <item>
         <title>Aho-Corasick and Applications</title>
@@ -155,7 +243,7 @@ we get a $\mathcal{O}(|S|\log |S|)$ solution.&lt;/p&gt;
 
 &lt;/details&gt;
 
-&lt;p&gt;&lt;a href=&quot;https://codeforces.com/contest/1743/problem/F&quot;&gt;CodeForces Edu Round 137F&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://codeforces.com/contest/1743/problem/F&quot;&gt;CodeForces Edu Round #137 F&lt;/a&gt;&lt;/p&gt;
 
 &lt;details style=&quot;margin-bottom: 5%&quot;&gt;
 

@@ -104,7 +104,7 @@ we get a $\mathcal{O}(|S|\log |S|)$ solution.
 
 </details>
 
-[CodeForces Edu Round 137F](https://codeforces.com/contest/1743/problem/F)
+[CodeForces Edu Round #137 F](https://codeforces.com/contest/1743/problem/F)
 
 <details markdown="1" style="margin-bottom: 5%">
 
