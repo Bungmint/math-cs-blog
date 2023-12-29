@@ -1,7 +1,7 @@
 # Site
 name: "Youngmin's Blog"
 title: "Youngmin's Blog"
-description: "A math & cs major trying to find meaning of life"
+description: "Yet Another CS Blog"
 logo: "assets/images/logo.png"
 favicon: "assets/images/logo.png"
 baseurl: /math-cs-blog
