@@ -2,12 +2,372 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Youngmin&apos;s Blog</title>
-    <description>A math &amp; cs major trying to find meaning of life</description>
+    <description>Yet Another CS Blog</description>
     <link>http://localhost:4000/math-cs-blog/</link>
     <atom:link href="http://localhost:4000/math-cs-blog/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Thu, 02 Mar 2023 21:30:47 -0800</pubDate>
-    <lastBuildDate>Thu, 02 Mar 2023 21:30:47 -0800</lastBuildDate>
+    <pubDate>Mon, 29 Apr 2024 23:20:26 -0700</pubDate>
+    <lastBuildDate>Mon, 29 Apr 2024 23:20:26 -0700</lastBuildDate>
     <generator>Jekyll v4.3.1</generator>
+    
+      <item>
+        <title>April Problem-solving</title>
+        <description>&lt;h3 id=&quot;joisc-20182019-cake-3&quot;&gt;&lt;a href=&quot;https://www.acmicpc.net/problem/17677&quot;&gt;JOISC 2018/2019. Cake 3&lt;/a&gt;&lt;/h3&gt;
+
+&lt;p&gt;First, note that for a fixed set of cakes, it is optimal to place them in an increasing order of the cost to minimize the cost penalty. Then, suppose $f(i, j)$ denote the maximum beauty of the cake given that all the cakes are chosen from $[i, j]$ and the cost incurred is $-2(C_j - C_i)$. Let $opt(i)$ be the optimum maximizing $opt(i, j)$ for $i$. It is easy to prove that $opt(i) \leq opt(i + 1)$. Thus, we can use divide and conquer optimization, and for computing the top $m$ value sum of an interval, we could use persistent segment tree or simply noting that we can use $O(optr - optl + r - l)$ operations when recursing, so we can just use a BIT with &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;lower_bound&lt;/code&gt; and move the left endpoint and right endpoint like how you would do it in Mo’s.&lt;/p&gt;
+
+&lt;h3 id=&quot;codeforces-1921d-balanced-subsequences&quot;&gt;&lt;a href=&quot;https://codeforces.com/contest/1924/problem/D&quot;&gt;CodeForces 1921D. Balanced Subsequences&lt;/a&gt;&lt;/h3&gt;
+
+&lt;p&gt;Relax the condition, and let $f(n, m, k)$ denote the number of bracket sequences such that the longest bracket subsequence is at most of length $2k$, then, the answer we are looking for is $f(n, m, k) - f(n, m, k - 1)$. We find that the recursion is&lt;/p&gt;
+
+\[f(n, m, k) = \begin{cases}
+\binom{n + m}{n} &amp;amp; \text{if $k \geq \min(n, m)$} \\
+f(n, m - 1, k) + f(n - 1, m, k - 1) &amp;amp; \text{otherwise} \\
+\end{cases}\]
+
+&lt;p&gt;this leads us to guessing that $f(n, m, k) = \binom{n + m}{k}$ which can be proven from induction.&lt;/p&gt;
+
+&lt;h3 id=&quot;boj-1144-싼-비용&quot;&gt;&lt;a href=&quot;https://www.acmicpc.net/problem/1144&quot;&gt;BOJ 1144. 싼 비용&lt;/a&gt;&lt;/h3&gt;
+
+&lt;p&gt;The main idea is noting that we can use DP on broken profile since we can incrementally add the tiles. However, the state is more involved than a simple bitmask - it needs to convey the information of which tiles are connected, so we need to use 3 bits per position, and then we can do a simple casework for the dp transition. Normalizing the bitmask, such that the first nonzero bit is assigned as 1, and so forth is necessary since it cuts down the number of states drastically, related to the Bell number (number of partition of n distinct objects). This gives an upperbound on the time complexity - $O(nm^2B_m\log B_m)$ which is sufficient.&lt;/p&gt;
+
+&lt;h3 id=&quot;pacnw-2019h-windmill-pivot&quot;&gt;&lt;a href=&quot;https://www.acmicpc.net/problem/18001&quot;&gt;PACNW 2019H. Windmill Pivot&lt;/a&gt;&lt;/h3&gt;
+
+&lt;p&gt;I was able to get the main idea during the virtual, though I didn’t realize the solution I have was sufficient. The key sentence in the question is that after 360 degree rotation, you are guaranteed to have reached back to your original position, which makes implementation easy. Note that there are $O(n^2)$ interesting lines arising from given $n$ points, and for each interesting lines, we can compute the next pivot in $O(n^2\log n)$ by angle sorting, so we have a functional graph with $O(n^2)$ vertices, and we only have to iterate over all the cycles which takes linear time, so in total, the time complexity is $O(n^2\log n)$.&lt;/p&gt;
+
+&lt;h3 id=&quot;pacnw-2023g-matrix-fraud&quot;&gt;&lt;a href=&quot;https://www.acmicpc.net/problem/31512&quot;&gt;PACNW 2023G. Matrix Fraud&lt;/a&gt;&lt;/h3&gt;
+
+&lt;p&gt;We were not able to make much progress in the actual contest, though Vedant did mention he was able to solve it if $r \geq c$. Note that “column”-banded binary matrix is also “row”-banded binary matrix, so we can transpose to get $r \ge c$. Then, we simply define $f(r, c_l, c_r)$ to be the cost to modify rows $[1, r]$ such that in row $r$, we have ones in the interval $[c_l, c_r]$. The naive transition takes $O(c^2)$, but note that the area querying is a prefix rectangle, so we can make the transition $O(1)$. Hence, the DP takes $O(rc^2) = O(rc\sqrt{rc})$ which is sufficient enough to pass.&lt;/p&gt;
+
+&lt;h3 id=&quot;codeforces-1672e-notepadexe&quot;&gt;&lt;a href=&quot;https://codeforces.com/contest/1672/problem/E&quot;&gt;CodeForces 1672E. notepad.exe&lt;/a&gt;&lt;/h3&gt;
+
+&lt;p&gt;I still cannot believe I didn’t solve it back then, but I still struggled to solve this right now lol. We can find $S = \sum_{i} l_i + n - 1$ in less than $30$ queries. Then, we focus on the height $h \in [1, n]$. Clearly, we don’t care about width being larger than $\frac{S}{h}$ since we can attain $S$. Also, in the best case scenario where no space is wasted (no trailing spaces in each line), the total characters used is $S - (h - 1)$, so we have a bound on $w$ which is $[(S - (h - 1)) / h, S / h]$. Clearly, this interval always contain at most $1$ integer, so we can simply query the width in the interval for each $h \in [1, n]$ which takes exactly $n$ queries, so we are done.&lt;/p&gt;
+
+&lt;h3 id=&quot;codeforces-1672f2-checker-for-array-shuffling&quot;&gt;&lt;a href=&quot;https://codeforces.com/contest/1672/problem/F2&quot;&gt;CodeForces 1672F2. Checker for Array Shuffling&lt;/a&gt;&lt;/h3&gt;
+
+&lt;p&gt;Upsolved, had to read the editorial for the big picture. Considering the directed graph with edges from $a_i$ to $b_i$.&lt;/p&gt;
+
+&lt;h3 id=&quot;ioi-2013-cave&quot;&gt;&lt;a href=&quot;https://www.acmicpc.net/problem/20106&quot;&gt;IOI 2013. Cave&lt;/a&gt;&lt;/h3&gt;
+
+&lt;p&gt;It becomes very trivial after noting that $70000 &amp;gt; N(\log N + 1)$. We iterate over the doors in an increasing order, and I toggled all $\log N$ bits, and then there are two possibilities - the mask or the negation of the mask, and we can check that manually once more. Apparently we could simply do a binary search by toggling all the switches in the range $[l, r]$.&lt;/p&gt;
+
+&lt;h3 id=&quot;codeforces-1819c-the-fox-and-the-complete-tree-traversal&quot;&gt;&lt;a href=&quot;https://codeforces.com/contest/1819/problem/C&quot;&gt;CodeForces 1819C. The Fox and the Complete Tree Traversal&lt;/a&gt;&lt;/h3&gt;
+
+&lt;p&gt;The subgraph of the form of one vertex with degree $3$, and each neighbor not being a leaf must not exist in order for the cycle to exist. If no such subgraph exists, then, the graph is of the form of a diameter and some vertices on the diameter having a leaf neighbor not on the diameter. Then, we can simply traverse from left to right, right to left jumping which is easy to prove.&lt;/p&gt;
+
+&lt;h3 id=&quot;codeforces-1819d-misha-and-apples&quot;&gt;&lt;a href=&quot;https://codeforces.com/contest/1819/problem/D&quot;&gt;CodeForces 1819D. Misha and Apples&lt;/a&gt;&lt;/h3&gt;
+
+&lt;p&gt;Just maintaining if at position $i$, if the bag can get cleared, and the maximum value achievable afterwards.&lt;/p&gt;
+
+&lt;h3 id=&quot;codeforces-1930f-maximize-the-difference&quot;&gt;&lt;a href=&quot;https://codeforces.com/contest/1930/problem/F&quot;&gt;CodeForces 1930F. Maximize the Difference&lt;/a&gt;&lt;/h3&gt;
+
+&lt;p&gt;Note that $f(b)$ can be computed by finding the maximum of $b_i \&amp;amp; ~ b_j$. Then, for adding $v$, we add all the possible submasks of $v$ into $S_1$, and $~v$ into $S_2$ via DFSing. Each submask gets visited at most once and the degree of each mask is $O(\log N)$, so the update takes $O(N\log N)$ and query takes constant time as we can simply check whenever we add a mask to a set, whether the other set already contained the mask. Thus, $O(N\log N + Q)$.&lt;/p&gt;
+</description>
+        <pubDate>Thu, 11 Apr 2024 00:00:00 -0700</pubDate>
+        <link>http://localhost:4000/math-cs-blog/April-problem-solving/</link>
+        <guid isPermaLink="true">http://localhost:4000/math-cs-blog/April-problem-solving/</guid>
+        
+        <category>problem-solving</category>
+        
+        
+      </item>
+    
+      <item>
+        <title>February Problem Solving</title>
+        <description>&lt;h3 id=&quot;codeforces-1922f-replace-on-segment&quot;&gt;&lt;a href=&quot;https://codeforces.com/contest/1922/problem/F&quot;&gt;CodeForces 1922F. Replace on Segment&lt;/a&gt;&lt;/h3&gt;
+
+&lt;p&gt;Note that we should never do two operations that intersect: $[l_1, r_1]$, $[l_2, r_2]$, $l_1 \le l_2 \le r_1 \le r_2$. Then, we can compute the dp recurrence for $f(l, r, k)$, $g(l, r, k)$ where $f$ is the minimum number of operation for the segment $[l, r]$ to be equal to $k$, $g$ is the minimum number of operation for the segment $[l, r]$ to be all different from $k$. This results in an $O(n^4)$ dp.&lt;/p&gt;
+
+&lt;h3 id=&quot;cco-2018-boring-lectures&quot;&gt;&lt;a href=&quot;https://www.acmicpc.net/problem/19634&quot;&gt;CCO 2018. Boring Lectures&lt;/a&gt;&lt;/h3&gt;
+
+&lt;p&gt;Offline deletion + Segment tree. We can use the idea used in offline dynamic connectivity, but we cannot naively do this since $N \le 10^6$, so it would result in $O(N\log N\log Q)$ which is too much, so we note that only $Q$ values are updated, so we only change those values, and leave the $N - Q$ values, compute the values for them before and do the offline dynamic connectivity style divide and conquer which results in $O(N\log N + Q\log N\log Q)$ which fits in the TL.&lt;/p&gt;
+
+&lt;h3 id=&quot;별-보러-가자&quot;&gt;&lt;a href=&quot;https://www.acmicpc.net/problem/31227&quot;&gt;별 보러 가자&lt;/a&gt;&lt;/h3&gt;
+
+&lt;p&gt;Recall for Manhattan distance:&lt;/p&gt;
+
+\[|x_1 - x_2| + |y_1 - y_2| = \max(x_1 + y_1 - (x_2 + y_2), -(x_1 + y_1) + (x_2 + y_2), x_1 - y_1 - (x_2 - y_2), x_2 - y_2 - (x_1 - y_1))\]
+
+&lt;p&gt;then, we can compute $dp[N][M]$, the maximum value of sum of $R_i$ over $N$ days, $M$ observations in $O(NM)$ by realizing that suboptimal values will always be smaller due to the $\max$ operator.&lt;/p&gt;
+
+&lt;h3 id=&quot;all-colourings&quot;&gt;&lt;a href=&quot;https://open.kattis.com/problems/allcolourings&quot;&gt;All Colourings&lt;/a&gt;&lt;/h3&gt;
+
+&lt;p&gt;Computing the values directly is hard, so we compute the values $dp[mask]$ - the number of ways satisfying at least the edges in the mask which is trivial - DSU/DFS and then simply $K^{CC}$. Then, we can do a Möbius transformation to retrieve the $dp’[mask]$ - the number of ways satisfying exactly the edges in the mask.&lt;/p&gt;
+
+&lt;h3 id=&quot;cerc-2016-easy-equation&quot;&gt;&lt;a href=&quot;https://www.acmicpc.net/problem/13949&quot;&gt;CERC 2016. Easy Equation&lt;/a&gt;&lt;/h3&gt;
+
+&lt;p&gt;Vieta jumping + BFS.&lt;/p&gt;
+
+&lt;h3 id=&quot;codeforces-1919f2-wine-factory-hard-version&quot;&gt;&lt;a href=&quot;https://codeforces.com/contest/1919/problem/F2&quot;&gt;CodeForces 1919F2. Wine Factory (Hard Version)&lt;/a&gt;&lt;/h3&gt;
+
+&lt;p&gt;Note that we can model this problem as a flow problem with each water tower $i$ has an incoming edge from the source with capacity $a_i$ and outgoing edge to a sink with capacity $b_i$, and tower $i$ has an edge to $i + 1$ with capacity $c_i$. Considering the minimum cut, we note that only $a_i$ or $b_i$ will be in the cut, and we can maintain this dynamically with a segment tree where for each node, we have a $2 \times 2$ matrix representing where the left endpoint and the right endpoint belongs.&lt;/p&gt;
+
+&lt;h3 id=&quot;nwerc-2022-faster-than-light&quot;&gt;&lt;a href=&quot;https://www.acmicpc.net/problem/26179&quot;&gt;NWERC 2022. Faster Than Light&lt;/a&gt;&lt;/h3&gt;
+
+&lt;p&gt;We notice that for a positive slope line, in order for the line to go through all the rectangles, it must be between the top left corner and the bottom right corner, so we can consider the convex hull of the top left corner and the convex hull of the bottom right corner and check if the two polygons intersect, which can be done in linear time using Minkowski sum. Other cases can be dealt in a similar fashion.&lt;/p&gt;
+
+&lt;h3 id=&quot;nwerc-2022-last-guess&quot;&gt;&lt;a href=&quot;https://www.acmicpc.net/problem/26179&quot;&gt;NWERC 2022. Last Guess&lt;/a&gt;&lt;/h3&gt;
+
+&lt;p&gt;Flow with lowerbound. The sum of greens and yellows bound the number of a specific letter, model the flow as a matching between the positions and the letters.&lt;/p&gt;
+
+&lt;h3 id=&quot;swerc-2013-it-can-be-arranged&quot;&gt;&lt;a href=&quot;https://www.acmicpc.net/problem/9590&quot;&gt;SWERC 2013. It Can Be Arranged&lt;/a&gt;&lt;/h3&gt;
+
+&lt;p&gt;Flow with lowerbound.&lt;/p&gt;
+
+&lt;h3 id=&quot;codeforces-1924c-fractal-origami&quot;&gt;&lt;a href=&quot;https://codeforces.com/contest/1924/problem/C&quot;&gt;CodeForces 1924C. Fractal Origami&lt;/a&gt;&lt;/h3&gt;
+
+&lt;p&gt;The formula is pretty evident, simple geometric series, and to implement the solution, we just have to implement $Z_p[\sqrt{2}]$, and this is fine since $2$ is not a quadratic residue in this $p$.&lt;/p&gt;
+
+&lt;h3 id=&quot;nwerc-2022-alternating-algorithm&quot;&gt;&lt;a href=&quot;https://www.acmicpc.net/problem/26174&quot;&gt;NWERC 2022. Alternating Algorithm&lt;/a&gt;&lt;/h3&gt;
+
+&lt;p&gt;Note that we can reduce the problem into the case where we only have 0’s and 1’s by letting the smaller out of the last two elements that were swapped to be denoted as $x$, then, categorize all the elements as $\le x$ or $&amp;gt; x$. After this reduction, note that the answer is lowerbounded by the number of moves for one zero to move into place + the number of zeros after it. Actually, this lowerbound is in fact the answer since if a zero gets blocked by a previous zero for couple operations, then, the value is accounted for by the earlier zeros. With this observation, we can maintain this value using a RURQ data structure, namely, a lazy segment tree, which yields a $O(n\log n)$ solution.&lt;/p&gt;
+
+&lt;h3 id=&quot;nwerc-2022-kebab-pizza&quot;&gt;&lt;a href=&quot;https://www.acmicpc.net/problem/26184&quot;&gt;NWERC 2022. Kebab Pizza&lt;/a&gt;&lt;/h3&gt;
+
+&lt;p&gt;A lot of casework. The main idea is to represent the pizza slices as the edges and toppings as vertices, and if there is a vertex with three nonleaves neighbors, it is impossible, otherwise, there are two cases: one connected component is always good, if not, if there is a cycle, it is bad.&lt;/p&gt;
+
+&lt;h3 id=&quot;boj-13727-5차원-구사과-초콜릿&quot;&gt;&lt;a href=&quot;https://www.acmicpc.net/problem/13727&quot;&gt;BOJ 13727. 5차원 구사과 초콜릿&lt;/a&gt;&lt;/h3&gt;
+
+&lt;p&gt;Bitmask DP + Berlekamp-Massey. Note that each $2 \times 2 \times 2 \times 2$ layer has to be filled up by itself or the layer that comes after it, so this gives a nice approach to compute the dp $f(l, mask, b)$ which represents $l$th layer, blocks that are on in $mask$ is filled up and we only used subset of blocks $1$, …, $b$ in this layer. This gives a $O(2^{16}2^5L)$ solution for the first $L$ layers which is not enough, so we need to use Berlekamp-Massey after computing the first $300$ values or so, then, we can find the linear recurrence.&lt;/p&gt;
+</description>
+        <pubDate>Sun, 11 Feb 2024 00:00:00 -0800</pubDate>
+        <link>http://localhost:4000/math-cs-blog/February-problem-solving/</link>
+        <guid isPermaLink="true">http://localhost:4000/math-cs-blog/February-problem-solving/</guid>
+        
+        <category>problem-solving</category>
+        
+        
+      </item>
+    
+      <item>
+        <title>January Problem Solving</title>
+        <description>&lt;h3 id=&quot;spotify-challenge-2010-apparatus&quot;&gt;&lt;a href=&quot;https://open.kattis.com/problems/apparatus&quot;&gt;Spotify Challenge 2010. Apparatus&lt;/a&gt;&lt;/h3&gt;
+
+&lt;p&gt;The problem is asking the number of bijective functions $f \colon [n] \to [n]$ such that for the given input $(S_i, T_i)$, $f(S_i) = T_i$. Note that if we can decompose the domain $[n]$ into disjoint sets that are of the form $\bigcap_{i \in I} S_i$, we can simply compute the product of the number of permutations in each disjoint set. We can do this by maintaining the disjoint sets induced by $S_1, \dots, S_{i - 1}$ and inserting a new set $S_i$ can be done in $O(n)$, so the time complexity is $O(n^2)$.&lt;/p&gt;
+
+&lt;h3 id=&quot;bapc-2017-ghostbusters&quot;&gt;&lt;a href=&quot;https://www.acmicpc.net/problem/14994&quot;&gt;BAPC 2017. Ghostbusters&lt;/a&gt;&lt;/h3&gt;
+
+&lt;p&gt;We can consider the bipartite graph $G$ with rows and columns being the vertices. We find the connected components of $G$, and for each connected component, we compute the maximum spanning tree since if there is a cycle, we can always remove one of the edges to have a higher probability, and we are to find&lt;/p&gt;
+
+\[\operatorname{argmax}_{T \colon spanning tree} \prod_{e_i \in T} p_i = \operatorname{argmax}_{T \colon spanning tree} \sum_{e_i \in T} \ln p_i\]
+
+&lt;p&gt;since $\ln$ is monotonic. The time complexity should be $O(E\log E) = O(nm\log nm)$.&lt;/p&gt;
+
+&lt;h3 id=&quot;codeforces-1553g&quot;&gt;&lt;a href=&quot;https://codeforces.com/contest/1553/problem/G&quot;&gt;CodeForces 1553G&lt;/a&gt;&lt;/h3&gt;
+
+&lt;p&gt;Notice that the answer will be at most $2$ since $2 \mid a_i(a_i + 1)$ for any $a_i$, so we can always create two nodes to satisfy the condition. 
+Also, we can compute the connected components by storing $i$ in each prime divisor of $a_i$, and for each prime number, we connect all the vertices stored there. This covers when the answer is zero. For the one case, for each $i$, we compute the prime divisors of $a_i(a_i + 1)$ and which connected components it will connect when added: let $S_i$ denote the ids of the connected components. $|S_i| \leq 8$, so we can precompute all the connected component pairs that can be connected with one additional vertex in $O(\binom{8}{2}n)$. 
+The overall time complexity will be $O(A + n\log A)$, where $A$ is the maximum possible value of $a_i$.&lt;/p&gt;
+
+&lt;h3 id=&quot;codesprint-la-2023-food-mixing&quot;&gt;&lt;a href=&quot;https://open.kattis.com/contests/j4ce6r/problems/foodmixing?tab=metadata&quot;&gt;CodeSprint LA 2023. Food Mixing&lt;/a&gt;&lt;/h3&gt;
+
+&lt;p&gt;The problem statement can be reduced down to:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Given a set $S$ of 2D points $P_1, \dots, P_n$, check whether $(x, y) \in \operatorname{conv}(S)$.&lt;/li&gt;
+  &lt;li&gt;If so, output a valid convex combination that results in $(x, y)$.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;This can be done by computing the convex hull of $S$, and check whether $(x, y)$ is in the convex polygon, and if so, split the convex polygon into triangles of the form $Q_1Q_iQ_{i + 1}$, where we can retrieve the coefficients using line intersection. There are some edge cases, such as when the convex polygon is degenerate, but that’s Geo for ya.&lt;/p&gt;
+
+&lt;h3 id=&quot;boj-31027-물고기-게임&quot;&gt;&lt;a href=&quot;https://www.acmicpc.net/problem/31027&quot;&gt;BOJ 31027. 물고기 게임&lt;/a&gt;&lt;/h3&gt;
+
+&lt;p&gt;Simple casework.&lt;/p&gt;
+
+&lt;h3 id=&quot;boj-31030-순열과-수열&quot;&gt;&lt;a href=&quot;https://www.acmicpc.net/problem/31030&quot;&gt;BOJ 31030. 순열과 수열&lt;/a&gt;&lt;/h3&gt;
+
+&lt;p&gt;We note that for disjoint cycles of $A$, they do not affect the corresponding $B$ values, so we focus on individual cycles. Consider the cycle $i, A_i, A_{A_i}, \dots$. If we set $B_i = k$, $B_{A_i} = A_k$, $B_{A_{A_i}} = A_{A_k}, \dots$, and the only condition that needs to be satisfied is the length of the cycle $k$ is in must divide the cycle length of $i$. For each cycle, we can do this in $O(NC)$, so the solution runs in $O(\sum NC) = O(N^2)$.&lt;/p&gt;
+
+&lt;h3 id=&quot;dwango-programming-contest-6th-cookie-distribution&quot;&gt;&lt;a href=&quot;https://atcoder.jp/contests/dwacon6th-prelims/tasks/dwacon6th_prelims_c&quot;&gt;Dwango Programming Contest 6th. Cookie Distribution&lt;/a&gt;&lt;/h3&gt;
+
+&lt;p&gt;Application of the so-called “product trick”. The product can be viewed as the number of ways to color one cookie red for each child. Let $dp[i][j]$ be the number of ways such that in the first $i$ days, $j$ children get red cookies. The dp recurrence is&lt;/p&gt;
+
+\[dp[i][j] = \sum_{m = 0}^{\min(a_i, j)} dp[i - 1][j - m]\binom{n - j + m}{m}\binom{n - m}{a_i - m}\]
+
+&lt;p&gt;and the answer is $dp[k][n]$. This can be computed in $O(kn^2)$&lt;/p&gt;
+
+&lt;h3 id=&quot;abc-231g-balls-in-boxes&quot;&gt;&lt;a href=&quot;https://atcoder.jp/contests/abc231/tasks/abc231_g&quot;&gt;ABC 231G. Balls in Boxes&lt;/a&gt;&lt;/h3&gt;
+
+&lt;p&gt;Another application of “product trick”. This time, we start with some number of balls, so we first compute the number of ways to color $j$ balls when considering the first $i$ boxes: $dp[i][j]$.&lt;/p&gt;
+
+\[dp[i][j] = dp[i - 1][j] + a[i]dp[i - 1][j - 1]\]
+
+&lt;p&gt;and then for each $0 \leq m \leq n$, the value $dp[n][m]$ will contribute&lt;/p&gt;
+
+\[\frac{1}{n^m}dp[n][m]\binom{k}{n - m}(n - m)!n^{k - n + m}\]
+
+&lt;h3 id=&quot;codeforces-1919f1-wine-factory-easy-version&quot;&gt;&lt;a href=&quot;https://codeforces.com/contest/1919/problem/F1&quot;&gt;CodeForces 1919F1. Wine Factory (Easy Version)&lt;/a&gt;&lt;/h3&gt;
+
+&lt;p&gt;We can model each water tower as a ReLU function: $f_i(x) = \max(x + a_i - b_i, 0)$, and ReLU functions of the form $g(x) = \max(x + a, 0) + b$ is indeed a monoid (by introducing an artificial identity function), so we can use a segment tree to compute the remaining water which is $seg[0…n - 1](0)$.&lt;/p&gt;
+
+&lt;h3 id=&quot;swerc-2015-game-of-cards&quot;&gt;&lt;a href=&quot;https://www.acmicpc.net/problem/11683&quot;&gt;SWERC 2015. Game of Cards&lt;/a&gt;&lt;/h3&gt;
+
+&lt;p&gt;Simple Sprague-Grundy theorem application&lt;/p&gt;
+
+&lt;h3 id=&quot;swerc-2017-cordan-bleu&quot;&gt;&lt;a href=&quot;https://www.acmicpc.net/problem/15416&quot;&gt;SWERC 2017. Cordan Bleu&lt;/a&gt;&lt;/h3&gt;
+
+&lt;p&gt;We note that the distance from the restaurant to the wine merchants is included regardless. To match a wine cellar with a courier, it is a weighted bipartite matching which can be solved using MCMF or Hungarian algorithm. The time limit is quite tight.&lt;/p&gt;
+
+&lt;h3 id=&quot;swerc-2016-passwords&quot;&gt;&lt;a href=&quot;https://www.acmicpc.net/problem/13961&quot;&gt;SWERC 2016. Passwords&lt;/a&gt;&lt;/h3&gt;
+
+&lt;p&gt;We make an AC-automaton with the blacklisted words, and then propagate the blacklist information through suffix links/children. Then, we can do a dynamic programming with the state being $(len, pos, has\_low, has\_up, has\_num)$.&lt;/p&gt;
+
+&lt;h3 id=&quot;boj-31032-트리의-개수&quot;&gt;&lt;a href=&quot;https://www.acmicpc.net/problem/31032&quot;&gt;BOJ 31032. 트리의 개수&lt;/a&gt;&lt;/h3&gt;
+
+&lt;p&gt;Using indicator variables, we can write the desired sum as the following:&lt;/p&gt;
+
+\[\sum_{j = 1}^{K}g_j(T) = \sum_{j = 1}^{K}\sum_{T&apos;\subseteq T}1 + \sum_{e \in E&apos;}[A_u \leq j \lor A_v \leq j] - \sum_{v \in V&apos;}[A_v \leq j]\]
+
+&lt;p&gt;All three terms can be computed by first rearranging and then using tree dp, where $dp[u]$ is the number of connected subgraphs that has $u$ as the closest vertex to the root, and $revdp[u]$ is the number of connected subgraphs that includes $par[u]$, and does not include $u$. The recurrences are&lt;/p&gt;
+
+\[dp[u] = \prod_{i = 1}^k (1 + dp[c_i])\]
+
+&lt;p&gt;and&lt;/p&gt;
+
+\[revdp[u] = (revdp[par[u]] + 1) \frac{dp[par[u]]}{1 + dp[u]}\]
+
+&lt;p&gt;The time complexity is $O(n)$.&lt;/p&gt;
+
+&lt;h3 id=&quot;boj-30989-다항함수의-미분과-나머지&quot;&gt;&lt;a href=&quot;https://www.acmicpc.net/problem/30989&quot;&gt;BOJ 30989. 다항함수의 미분과 나머지&lt;/a&gt;&lt;/h3&gt;
+
+&lt;p&gt;Essentially, the condition with the kth derivative is:&lt;/p&gt;
+
+\[f^{(k)}(x) = \sum_{i = k}^n (i)_kc_ix^{i - k} = \sum_{j = 0}^d r_jt^j\]
+
+&lt;p&gt;and $(i)_k \pmod{m}$ can be computed using a segment tree or factorizing $m$ into its prime factors and doing a sliding window, maintaining the power of $p$ and the product that is coprime with $p$. Then, $(i)_kc_i \equiv s_j \pmod{m}$, so we can solve this by extended euclidean algorithm, and find the range of $c_i$. There is a lot of edge cases that we need to consider, which is left as an exercise for the reader.&lt;/p&gt;
+
+&lt;h3 id=&quot;usaco-jan20-platinum-minimizing-haybales&quot;&gt;&lt;a href=&quot;https://www.acmicpc.net/problem/24485&quot;&gt;USACO Jan20 Platinum. Minimizing Haybales&lt;/a&gt;&lt;/h3&gt;
+
+&lt;p&gt;The main observation is that for each $1 \leq i \leq N$, 
+the cardinality of the set $S_i := \{j \in [i - 1] \colon |h_j - h_i| &amp;gt; K\}$ is invariant under the given operation, so the idea for the solution is to take the smallest $h_i$ that satisfies $|S_i| = 0$, and remove $h_i$ from the remaining $S_j$’s. This can be done via square root decomposition or segment tree.&lt;/p&gt;
+</description>
+        <pubDate>Tue, 09 Jan 2024 00:00:00 -0800</pubDate>
+        <link>http://localhost:4000/math-cs-blog/January-problem-solving/</link>
+        <guid isPermaLink="true">http://localhost:4000/math-cs-blog/January-problem-solving/</guid>
+        
+        <category>problem-solving</category>
+        
+        
+      </item>
+    
+      <item>
+        <title>CodeForces Pinely Round 3</title>
+        <description>&lt;p&gt;I am very happy with my performance in the round despite not participating for nearly 6 months. Back to IM!&lt;/p&gt;
+
+&lt;h2 id=&quot;before-contest&quot;&gt;Before Contest&lt;/h2&gt;
+
+&lt;p&gt;I warmed up by solving &lt;a href=&quot;https://codeforces.com/contest/1863&quot;&gt;Pinely Round 2&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h3 id=&quot;a&quot;&gt;A&lt;/h3&gt;
+
+&lt;p&gt;We compute the optimal scenario and the pessimal scenario: 
+Optimal is assuming that when every time someone comes online, the person has yet to read the post. Pessimal is assuming that every time someone comes online, if it is possible, we assume the person has already read the post.&lt;/p&gt;
+
+&lt;p&gt;This should yield a simple $O(n)$ solution.&lt;/p&gt;
+
+&lt;h3 id=&quot;b&quot;&gt;B&lt;/h3&gt;
+
+&lt;p&gt;We notice that when we choose $x$ and then $y &amp;gt; x$, the part where it is $&amp;lt; x$ does not change at all in the second operation. This observation motivates a greedy solution, where if $i…j$ is already in the right order as a subsequence of the permutation, we we should do an operation with $j$.&lt;/p&gt;
+
+&lt;p&gt;Storing the indices of $1$ to $n$ and scanning in that order should lead to an $O(n)$ solution.&lt;/p&gt;
+
+&lt;h3 id=&quot;c&quot;&gt;C&lt;/h3&gt;
+
+&lt;p&gt;The crucial observation is that we could think of the operation as rotating a $n + 1$ length array, where the initial array is $a_1$, $\dots$, $a_n$, $a_{n + 1}$, and&lt;/p&gt;
+
+\[a_{n + 1} = \frac{n(n + 1)}{2} - \sum_{i = 1}^n a_i\]
+
+&lt;p&gt;Then, we only care about $k \pmod{n + 1}$ number of operations, which can be simulated in $O(k)$ using a deque or use the std::rotate() function.&lt;/p&gt;
+
+&lt;h3 id=&quot;d&quot;&gt;D&lt;/h3&gt;
+
+&lt;p&gt;Dominoes that are placed horizontally do not affect the row count, and vice versa, so we can color the vertical dominoes by scanning row by row, making sure that there are only even number of vertical dominoes occupying each row, and similarly with the columns.&lt;/p&gt;
+
+&lt;p&gt;The time complexity is $O(nm)$.&lt;/p&gt;
+
+&lt;h3 id=&quot;e&quot;&gt;E&lt;/h3&gt;
+
+&lt;p&gt;If we know which hour to start, we can greedily complete the quests, completing whichever is completable, but the number of hours is $k \leq 10^9$, so we have to find a smarter approach. We use dynamic programming: $dp[u]$ represents the fastest time that the quests dependent on quest $u$ can be completed, and it satisfies the following recursion:&lt;/p&gt;
+
+\[dp[u] = \max_{v \in N(u)} 
+\begin{cases}
+    dp[v] &amp;amp; \text{if $h[u] \leq h[v]$} \\
+    dp[v] + (1, 0) &amp;amp; \text{if $h[u] &amp;gt; h[v]$} \\
+\end{cases}\]
+
+&lt;p&gt;and then, we add a dummy node that represents the super source with edges from the super source to the sources in the original graph. Using storing a suffix maximum, we can iterate all possible starting time, and choose whichever takes the shortest amount of time.&lt;/p&gt;
+
+&lt;p&gt;The time complexity should be $O(n + m)$.&lt;/p&gt;
+
+&lt;h3 id=&quot;f&quot;&gt;F&lt;/h3&gt;
+
+&lt;p&gt;Let $S = \oplus_{i = L}^R a_i$, $x = \oplus_{i = L}^k a_i$, $y = \oplus_{i = k + 1}^R a_i$, then, $S = x \oplus y$, and there are two cases:&lt;/p&gt;
+
+&lt;p&gt;i) $S = 0$&lt;/p&gt;
+
+&lt;p&gt;Then, for any $L &amp;lt; k &amp;lt; R$, we can attain $[L, k]$ and $[k + 1, R]$.&lt;/p&gt;
+
+&lt;p&gt;ii) $S &amp;gt; 0$&lt;/p&gt;
+
+&lt;p&gt;Then, whichever of $x$ and $y$ that has the MSB of $S$ can be attained.&lt;/p&gt;
+
+&lt;p&gt;We maintain an array $msbs[i]$ which stores the MSB of a “good” array, and another array $is\_zero[i]$ which is true if there is a “good” array with xor sum zero.&lt;/p&gt;
+
+&lt;p&gt;The time complexity should be $O(n^2)$.&lt;/p&gt;
+
+&lt;h2 id=&quot;actual-contest&quot;&gt;&lt;a href=&quot;https://codeforces.com/contest/1909&quot;&gt;Actual Contest&lt;/a&gt;&lt;/h2&gt;
+
+&lt;h3 id=&quot;a-1&quot;&gt;A&lt;/h3&gt;
+
+&lt;p&gt;The only case that is not achievable is when there exists a point with a positive $x$-value, a point with a positive $y$-value, a point with a negative $x$-value, and a point with a negative $y$-value, where each point does not necessarily have to be different.&lt;/p&gt;
+
+&lt;p&gt;This can be checked in $O(n)$.&lt;/p&gt;
+
+&lt;h3 id=&quot;b-1&quot;&gt;B&lt;/h3&gt;
+
+&lt;p&gt;Considering the binary representation. Since each $a_i$ is distinct, there exists a position $j$ where not all $a_i$ shares the same value for that position, and we can find the first position where they differ. Then, $2^j$ is the answer.&lt;/p&gt;
+
+&lt;p&gt;The time complexity is $O(n\log\text{MAX})$ if done naively, otherwise, $O(n + \log\text{MAX})$ is possible.&lt;/p&gt;
+
+&lt;h3 id=&quot;c-1&quot;&gt;C&lt;/h3&gt;
+
+&lt;p&gt;Note that if there exists a pair of intervals intersecting, it is always better to make them nested, and there exists only one configuration that satisfies it, which can be found by sorting the $l$ values and the $r$ values.&lt;/p&gt;
+
+&lt;p&gt;The time complexity is $O(n\log n)$&lt;/p&gt;
+
+&lt;h3 id=&quot;d-1&quot;&gt;D&lt;/h3&gt;
+
+&lt;p&gt;Each $a_i$ is independent of each other, so we should focus on a single one. For $a_i$, after performing $m$ of the operation, it is possible to make $m + 1$ copies of $\frac{a_i + km}{m + 1} = k + \frac{a_i - k}{m + 1}$. So we need to make the value of $\frac{a_i - k}{m + 1}$ the same for every $i$. Let $g = \gcd_{i = 1}^n (a_i - k)$, then, $m_i = \frac{a_i - k}{g} - 1$.&lt;/p&gt;
+
+&lt;p&gt;The time complexity is $O(n + \log\text{MAX})$.&lt;/p&gt;
+
+&lt;h3 id=&quot;e-1&quot;&gt;E&lt;/h3&gt;
+
+&lt;p&gt;If we simply turn on all the switches, only the perfect squares will remain, so for $n$ that satisfies $\lfloor\sqrt{n}\rfloor \leq \lfloor\frac{n}{5}\rfloor$, which holds true for all $n \geq 20$, we can always satisfy the condition. Now, for $n \leq 19$, we focus on the vectors $v_i \in \mathbb{Z}_2^n$, representing the lights that are turned on by switch $i$, and $v_1$, $\dots$, $v_n$ is the basis, so there are $\binom{n}{1} + \binom{n}{2} + \binom{n}{3} = O(n^3)$ valid combinations of switches.&lt;/p&gt;
+
+&lt;p&gt;Caching the valid combination of switches, we can achieve $O(Tn^4)$.&lt;/p&gt;
+
+&lt;h3 id=&quot;f1--f2&quot;&gt;F1 &amp;amp; F2&lt;/h3&gt;
+
+&lt;p&gt;Let $dp[i]$ be the number of valid placements of $1$ to $i$ that satisfies the restrictions $a_1$, $\dots$, $a_i$, and let $c = i - a_i$. Suppose the next position that isn’t $-1$ is $j &amp;gt; i$. Then, the recurrence is&lt;/p&gt;
+
+\[dp[j] = dp[i]\sum_{k = 0}^{a_j - a_i}\binom{j - i}{k}\binom{c}{a_j - a_i - k}\binom{j - i}{a_j - a_i - k}(a_i - a_j - k)!\binom{j - a_j + k}{k}k!\]
+
+&lt;p&gt;Since $a_i$ must be an increasing sequence (excluding $-1$s) for the restriction to have a valid permutation, the time complexity is $O(n)$.&lt;/p&gt;
+
+&lt;h2 id=&quot;afterthought&quot;&gt;Afterthought&lt;/h2&gt;
+
+&lt;p&gt;The quality of each problem was amazing. I hope the following Div 1+2 rounds also have this high-quality problems.&lt;/p&gt;
+</description>
+        <pubDate>Sat, 23 Dec 2023 00:00:00 -0800</pubDate>
+        <link>http://localhost:4000/math-cs-blog/CodeForces-Pinely-Round-3/</link>
+        <guid isPermaLink="true">http://localhost:4000/math-cs-blog/CodeForces-Pinely-Round-3/</guid>
+        
+        <category>problem-solving</category>
+        
+        <category>contest</category>
+        
+        
+      </item>
     
       <item>
         <title>February Problem-solving</title>
