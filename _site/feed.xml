@@ -5,9 +5,157 @@
     <description>Yet Another CS Blog</description>
     <link>http://localhost:4000/math-cs-blog/</link>
     <atom:link href="http://localhost:4000/math-cs-blog/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Sun, 26 May 2024 18:33:48 -0400</pubDate>
-    <lastBuildDate>Sun, 26 May 2024 18:33:48 -0400</lastBuildDate>
+    <pubDate>Sat, 06 Jul 2024 18:21:24 -0700</pubDate>
+    <lastBuildDate>Sat, 06 Jul 2024 18:21:24 -0700</lastBuildDate>
     <generator>Jekyll v4.3.1</generator>
+    
+      <item>
+        <title>2024/07/06 Problem-solving</title>
+        <description>&lt;h3 id=&quot;boj-28427-tricknology&quot;&gt;&lt;a href=&quot;https://www.acmicpc.net/problem/28427&quot;&gt;BOJ 28427. Tricknology&lt;/a&gt;&lt;/h3&gt;
+
+&lt;p&gt;The condition on the pair $(x, y)$ can be rewritten as $2x + 1$ is prime, so we only need the prefix sum on this predicate, thus, this can be solved in $O(Q + \text{MAX})$.&lt;/p&gt;
+
+&lt;h3 id=&quot;open-cup-20202021---gp-of-suwon-find-the-xor&quot;&gt;&lt;a href=&quot;https://www.acmicpc.net/problem/20557&quot;&gt;Open Cup 2020/2021 - GP of Suwon. Find the XOR&lt;/a&gt;&lt;/h3&gt;
+
+&lt;p&gt;It is a classic setup using DFS tree + backedges to get all the cycles, and then get the xor basis of the cycles. Then, we see that for every distance $d(i, j)$, it can be decomposed into two parts - $d(i) \oplus d(j)$ which is from traversing the DFS tree, and then some combination of the cycles in the xor basis to get the maximum possible weight. The first part can be computed very efficiently for each query using prefix sum, now for the second part, we first write the xor basis in the RREF, and let it be denoted by $C_1, \ldots, C_k$, with the most significant bits being $2^{i_1}, \ldots, 2^{i_k}$. Since it is in RREF, we know that for each $C_j$, it does not have any of the $2^{i_x}$ for $x \neq j$. This is the main observation. Now, for each $d(i, j)$, $C_x$ is only included if $d(i) \oplus d(j)$ does not have $2^{i_x}$. This lets us use prefix sum (again!) to finish the problem. The time complexity is $O((N + Q)\log\text{MAX})$.&lt;/p&gt;
+
+&lt;h3 id=&quot;toki-troc14-tree-game&quot;&gt;&lt;a href=&quot;https://tlx.toki.id/problems/troc-14/H/&quot;&gt;TOKI TROC14. Tree Game&lt;/a&gt;&lt;/h3&gt;
+
+&lt;p&gt;The idea is quite simple - in a line case, the problem reduces to range flip which can be done with a lazy segment tree, so we can use HLD + subtree queries (by ordering the heavy child first), and we maintain a slack variable that stores the light children sum. Note that computing $cnt[u]$, the number of white nodes in a subtree is straightforward, so we can manually compute it for the node and its heavy child, and we subtract by the slack variable, so when updating the path, we would first subtract the corresponding value for each light edge we go up, update the path, and then add back the values for the light edge. The time complexity would be $O(Q\log^2 N)$.&lt;/p&gt;
+
+&lt;p&gt;P.S. I had a major bug in my code that computed the subtree size wrong, but somehow it passed 10 tests…&lt;/p&gt;
+
+&lt;h3 id=&quot;seerc-2019a-max-or-min&quot;&gt;&lt;a href=&quot;https://www.acmicpc.net/problem/17955&quot;&gt;SEERC 2019A. Max or Min&lt;/a&gt;&lt;/h3&gt;
+
+&lt;p&gt;The idea is quite simple - for a fixed target value $x$, the only thing we care about each number is whether they are greater or less than $x$, and then, since the array is circular, we will always have a closed interval with the left and right endpoints being $x$, and after flipping some number first, the number of operations needed is simply the size of the interval plus the number of contiguous intervals of the same type. This can be nicely maintained using a segment tree storing $2 \times 2$ matrices.&lt;/p&gt;
+
+&lt;h3 id=&quot;nwerc-2009i-simple-polygon&quot;&gt;&lt;a href=&quot;https://www.acmicpc.net/problem/3679&quot;&gt;NWERC 2009I. Simple Polygon&lt;/a&gt;&lt;/h3&gt;
+
+&lt;p&gt;Convex Hull problem. The idea is that if we get a lower convex hull, every other point will lie nicely above it, so we can sort them by the x-coordinate and append it.&lt;/p&gt;
+
+&lt;h3 id=&quot;icpc-korea-prelim-2014e-highway&quot;&gt;&lt;a href=&quot;https://www.acmicpc.net/problem/10254&quot;&gt;ICPC Korea Prelim 2014E. Highway&lt;/a&gt;&lt;/h3&gt;
+
+&lt;p&gt;Rotating Calipers. Note that unlike the furthest point away from a line can be found by ternary search since the distance is convex, given that all the points are on one side of the line, the furthest point away from a point is &lt;strong&gt;not&lt;/strong&gt; convex!! Hence, we have to resort to comparing angles until we get angles closest to opposite. Note that we don’t move the calipers when they are parallel?&lt;/p&gt;
+
+&lt;h3 id=&quot;ioi-2013-dreaming&quot;&gt;&lt;a href=&quot;https://www.acmicpc.net/problem/8872&quot;&gt;IOI 2013. Dreaming&lt;/a&gt;&lt;/h3&gt;
+
+&lt;p&gt;Tree DP + Greedy. We can easily prove that for the newly added edges, it is never optimal to have different endpoints for a tree in the forest. Thus, we only have to consider which vertices will connect to different trees. Then, within the tree, the only thing that matters is its diameter, and the vertex that minimizes the maximum distance from itself. Suppose we have $k$ trees, each with maximum distance $d_1 \le d_2 \le \ldots d_k$. We can prove that it is always optimal to connect $T_k$ with rest of the trees like a star.&lt;/p&gt;
+
+&lt;h3 id=&quot;boj-13974-파일-합치기-2&quot;&gt;&lt;a href=&quot;https://www.acmicpc.net/problem/13974&quot;&gt;BOJ 13974. 파일 합치기 2&lt;/a&gt;&lt;/h3&gt;
+
+&lt;p&gt;Knuth Optimization. The main idea is that if $opt[i][j]$ is the optimum for an interval $[i, j]$ and the cost array satisfies monge array and $C[a][d] \ge C[b][c]$ for $a \le b \le c \le d$, we have that&lt;/p&gt;
+
+\[opt[i][j - 1] \le opt[i][j] \le opt[i + 1][j]\]
+
+&lt;p&gt;which allows us to iterate in increasing order of interval length to get $O(N^2)$.&lt;/p&gt;
+
+&lt;h3 id=&quot;arc-74f-lotus-leaves&quot;&gt;&lt;a href=&quot;https://atcoder.jp/contests/arc074/tasks/arc074_d&quot;&gt;ARC 74F. Lotus Leaves&lt;/a&gt;&lt;/h3&gt;
+
+&lt;p&gt;Idea is modeling leaves as an edge between a row and a column, and then we can see that this problem reduces to a minimum cut problem. Beware that the source and sink in this case should be a union of a row and a column, but otherwise a very standard flow problem, with a very chill bound.&lt;/p&gt;
+
+&lt;h3 id=&quot;boi-2009-beetle&quot;&gt;&lt;a href=&quot;https://www.acmicpc.net/problem/2419&quot;&gt;BOI 2009. Beetle&lt;/a&gt;&lt;/h3&gt;
+
+&lt;p&gt;Range DP. Very cool idea - instead of thinking about the maximum amount of water the beetle can get, we think about the complement; the minimum number of water to be wasted. Even then, it is somewhat unclear what the DP would look like. Thus, we fix the number of dews to visit to drink - let it be $k$. Then, if we move $x$ distance, the amount of water will decrease by $kx$.&lt;/p&gt;
+
+&lt;h3 id=&quot;boj-11001-김치&quot;&gt;&lt;a href=&quot;https://www.acmicpc.net/problem/11001&quot;&gt;BOJ 11001. 김치&lt;/a&gt;&lt;/h3&gt;
+
+&lt;p&gt;DnC Optimization. Since the value we are optimizing for forms a Monge array, it is trivial.&lt;/p&gt;
+
+&lt;h3 id=&quot;boj-14560-communism&quot;&gt;&lt;a href=&quot;https://www.acmicpc.net/problem/14560&quot;&gt;BOJ 14560. Communism&lt;/a&gt;&lt;/h3&gt;
+
+&lt;p&gt;MITM + Merge sorting. $O(n\times 3^{n / 2})$ doesn’t pass, so we must sort smartly - each stage we either add $-x[i]$, $0$, $x[i]$, so we only have to merge these three arrays fast which can be done in a merge sorting fashion, $T(n) = T(n / 3) + O(3^n)$, so $T(n) = O(3^n)$.&lt;/p&gt;
+
+&lt;h3 id=&quot;boj-17526-star-trek&quot;&gt;&lt;a href=&quot;https://www.acmicpc.net/problem/17526&quot;&gt;BOJ 17526. Star Trek&lt;/a&gt;&lt;/h3&gt;
+
+&lt;p&gt;Since the slopes are in arbitrary order for the dp in the increasing direction, we consider the reverse direction dp, where $dp[i]$ covers $[i, N]$. Then, we can see the slopes are in monotonic order, so we can do a simple CHT DP in $O(N\log N)$.&lt;/p&gt;
+
+&lt;h3 id=&quot;codeforces-1740f-conditional-mix&quot;&gt;&lt;a href=&quot;https://codeforces.com/contest/1740/problem/F&quot;&gt;CodeForces 1740F. Conditional Mix&lt;/a&gt;&lt;/h3&gt;
+
+&lt;p&gt;DP. Using Gale-Ryser Theorem, we can see that the necessary and sufficient condition for a multiset with $r_1 \ge \ldots \ge r_n$ is when for each prefix $k$, the following satisfies:&lt;/p&gt;
+
+\[\sum_{i = 1}^k r_i \le \sum_{j = 1}^n \min(k, f_j)\]
+
+&lt;p&gt;Then, we can define the dp state to be $(pos, sum, last)$ and then note that the number of values that can be last for a give pos is $\frac{n}{pos} + 1$, so using prefix sum, the dp can be done in $O(n^2\log n)$.&lt;/p&gt;
+
+</description>
+        <pubDate>Sat, 06 Jul 2024 00:00:00 -0700</pubDate>
+        <link>http://localhost:4000/math-cs-blog/20240706-problem-solving/</link>
+        <guid isPermaLink="true">http://localhost:4000/math-cs-blog/20240706-problem-solving/</guid>
+        
+        <category>problem-solving</category>
+        
+        
+      </item>
+    
+      <item>
+        <title>May Problem-solving</title>
+        <description>&lt;h3 id=&quot;toki-troc14-tree-game&quot;&gt;&lt;a href=&quot;https://tlx.toki.id/problems/troc-14/H/&quot;&gt;TOKI TROC14. Tree Game&lt;/a&gt;&lt;/h3&gt;
+
+&lt;p&gt;The idea is quite simple - in a line case, the problem reduces to range flip which can be done with a lazy segment tree, so we can use HLD + subtree queries (by ordering the heavy child first), and we maintain a slack variable that stores the light children sum. Note that computing $cnt[u]$, the number of white nodes in a subtree is straightforward, so we can manually compute it for the node and its heavy child, and we subtract by the slack variable, so when updating the path, we would first subtract the corresponding value for each light edge we go up, update the path, and then add back the values for the light edge. The time complexity would be $O(Q\log^2 N)$.&lt;/p&gt;
+
+&lt;p&gt;P.S. I had a major bug in my code that computed the subtree size wrong, but somehow it passed 10 tests…&lt;/p&gt;
+
+&lt;h3 id=&quot;seerc-2019a-max-or-min&quot;&gt;&lt;a href=&quot;https://www.acmicpc.net/problem/17955&quot;&gt;SEERC 2019A. Max or Min&lt;/a&gt;&lt;/h3&gt;
+
+&lt;p&gt;The idea is quite simple - for a fixed target value $x$, the only thing we care about each number is whether they are greater or less than $x$, and then, since the array is circular, we will always have a closed interval with the left and right endpoints being $x$, and after flipping some number first, the number of operations needed is simply the size of the interval plus the number of contiguous intervals of the same type. This can be nicely maintained using a segment tree storing $2 \times 2$ matrices.&lt;/p&gt;
+
+&lt;h3 id=&quot;nwerc-2009i-simple-polygon&quot;&gt;&lt;a href=&quot;https://www.acmicpc.net/problem/3679&quot;&gt;NWERC 2009I. Simple Polygon&lt;/a&gt;&lt;/h3&gt;
+
+&lt;p&gt;Convex Hull problem. The idea is that if we get a lower convex hull, every other point will lie nicely above it, so we can sort them by the x-coordinate and append it.&lt;/p&gt;
+
+&lt;h3 id=&quot;icpc-korea-prelim-2014e-highway&quot;&gt;&lt;a href=&quot;https://www.acmicpc.net/problem/10254&quot;&gt;ICPC Korea Prelim 2014E. Highway&lt;/a&gt;&lt;/h3&gt;
+
+&lt;p&gt;Rotating Calipers. Note that unlike the furthest point away from a line can be found by ternary search since the distance is convex, given that all the points are on one side of the line, the furthest point away from a point is &lt;strong&gt;not&lt;/strong&gt; convex!! Hence, we have to resort to comparing angles until we get angles closest to opposite. Note that we don’t move the calipers when they are parallel?&lt;/p&gt;
+
+&lt;h3 id=&quot;ioi-2013-dreaming&quot;&gt;&lt;a href=&quot;https://www.acmicpc.net/problem/8872&quot;&gt;IOI 2013. Dreaming&lt;/a&gt;&lt;/h3&gt;
+
+&lt;p&gt;Tree DP + Greedy. We can easily prove that for the newly added edges, it is never optimal to have different endpoints for a tree in the forest. Thus, we only have to consider which vertices will connect to different trees. Then, within the tree, the only thing that matters is its diameter, and the vertex that minimizes the maximum distance from itself. Suppose we have $k$ trees, each with maximum distance $d_1 \le d_2 \le \ldots d_k$. We can prove that it is always optimal to connect $T_k$ with rest of the trees like a star.&lt;/p&gt;
+
+&lt;h3 id=&quot;boj-13974-파일-합치기-2&quot;&gt;&lt;a href=&quot;https://www.acmicpc.net/problem/13974&quot;&gt;BOJ 13974. 파일 합치기 2&lt;/a&gt;&lt;/h3&gt;
+
+&lt;p&gt;Knuth Optimization. The main idea is that if $opt[i][j]$ is the optimum for an interval $[i, j]$ and the cost array satisfies monge array and $C[a][d] \ge C[b][c]$ for $a \le b \le c \le d$, we have that&lt;/p&gt;
+
+\[opt[i][j - 1] \le opt[i][j] \le opt[i + 1][j]\]
+
+&lt;p&gt;which allows us to iterate in increasing order of interval length to get $O(N^2)$.&lt;/p&gt;
+
+&lt;h3 id=&quot;arc-74f-lotus-leaves&quot;&gt;&lt;a href=&quot;https://atcoder.jp/contests/arc074/tasks/arc074_d&quot;&gt;ARC 74F. Lotus Leaves&lt;/a&gt;&lt;/h3&gt;
+
+&lt;p&gt;Idea is modeling leaves as an edge between a row and a column, and then we can see that this problem reduces to a minimum cut problem. Beware that the source and sink in this case should be a union of a row and a column, but otherwise a very standard flow problem, with a very chill bound.&lt;/p&gt;
+
+&lt;h3 id=&quot;boi-2009-beetle&quot;&gt;&lt;a href=&quot;https://www.acmicpc.net/problem/2419&quot;&gt;BOI 2009. Beetle&lt;/a&gt;&lt;/h3&gt;
+
+&lt;p&gt;Range DP. Very cool idea - instead of thinking about the maximum amount of water the beetle can get, we think about the complement; the minimum number of water to be wasted. Even then, it is somewhat unclear what the DP would look like. Thus, we fix the number of dews to visit to drink - let it be $k$. Then, if we move $x$ distance, the amount of water will decrease by $kx$.&lt;/p&gt;
+
+&lt;h3 id=&quot;boj-11001-김치&quot;&gt;&lt;a href=&quot;https://www.acmicpc.net/problem/11001&quot;&gt;BOJ 11001. 김치&lt;/a&gt;&lt;/h3&gt;
+
+&lt;p&gt;DnC Optimization. Since the value we are optimizing for forms a Monge array, it is trivial.&lt;/p&gt;
+
+&lt;h3 id=&quot;boj-14560-communism&quot;&gt;&lt;a href=&quot;https://www.acmicpc.net/problem/14560&quot;&gt;BOJ 14560. Communism&lt;/a&gt;&lt;/h3&gt;
+
+&lt;p&gt;MITM + Merge sorting. $O(n\times 3^{n / 2})$ doesn’t pass, so we must sort smartly - each stage we either add $-x[i]$, $0$, $x[i]$, so we only have to merge these three arrays fast which can be done in a merge sorting fashion, $T(n) = T(n / 3) + O(3^n)$, so $T(n) = O(3^n)$.&lt;/p&gt;
+
+&lt;h3 id=&quot;boj-17526-star-trek&quot;&gt;&lt;a href=&quot;https://www.acmicpc.net/problem/17526&quot;&gt;BOJ 17526. Star Trek&lt;/a&gt;&lt;/h3&gt;
+
+&lt;p&gt;Since the slopes are in arbitrary order for the dp in the increasing direction, we consider the reverse direction dp, where $dp[i]$ covers $[i, N]$. Then, we can see the slopes are in monotonic order, so we can do a simple CHT DP in $O(N\log N)$.&lt;/p&gt;
+
+&lt;h3 id=&quot;codeforces-1740f-conditional-mix&quot;&gt;&lt;a href=&quot;https://codeforces.com/contest/1740/problem/F&quot;&gt;CodeForces 1740F. Conditional Mix&lt;/a&gt;&lt;/h3&gt;
+
+&lt;p&gt;DP. Using Gale-Ryser Theorem, we can see that the necessary and sufficient condition for a multiset with $r_1 \ge \ldots \ge r_n$ is when for each prefix $k$, the following satisfies:&lt;/p&gt;
+
+\[\sum_{i = 1}^k r_i \le \sum_{j = 1}^n \min(k, f_j)\]
+
+&lt;p&gt;Then, we can define the dp state to be $(pos, sum, last)$ and then note that the number of values that can be last for a give pos is $\frac{n}{pos} + 1$, so using prefix sum, the dp can be done in $O(n^2\log n)$.&lt;/p&gt;
+
+</description>
+        <pubDate>Wed, 29 May 2024 00:00:00 -0700</pubDate>
+        <link>http://localhost:4000/math-cs-blog/May-problem-solving/</link>
+        <guid isPermaLink="true">http://localhost:4000/math-cs-blog/May-problem-solving/</guid>
+        
+        <category>problem-solving</category>
+        
+        
+      </item>
     
       <item>
         <title>Grind for NAC</title>
@@ -107,7 +255,7 @@
 
 &lt;p&gt;The idea boils down to can we reduce the number of constraints as we fill out $S$ from the highest bit to the lowest, and the answer is in fact yes - for bit $2^i$, we can either take $i$, then, the condition $t_1$ and $t_2$ that differ by $2^i$ can be merged as $t_1 \&amp;amp; (t_2 &amp;gt;&amp;gt; 1)$, and a similar operation can be done when you don’t take the bit.&lt;/p&gt;
 </description>
-        <pubDate>Tue, 30 Apr 2024 00:00:00 -0400</pubDate>
+        <pubDate>Tue, 30 Apr 2024 00:00:00 -0700</pubDate>
         <link>http://localhost:4000/math-cs-blog/Grind-for-NAC/</link>
         <guid isPermaLink="true">http://localhost:4000/math-cs-blog/Grind-for-NAC/</guid>
         
@@ -169,7 +317,7 @@ f(n, m - 1, k) + f(n - 1, m, k - 1) &amp;amp; \text{otherwise} \\
 
 &lt;p&gt;Note that $f(b)$ can be computed by finding the maximum of $b_i \&amp;amp; ~ b_j$. Then, for adding $v$, we add all the possible submasks of $v$ into $S_1$, and $~v$ into $S_2$ via DFSing. Each submask gets visited at most once and the degree of each mask is $O(\log N)$, so the update takes $O(N\log N)$ and query takes constant time as we can simply check whenever we add a mask to a set, whether the other set already contained the mask. Thus, $O(N\log N + Q)$.&lt;/p&gt;
 </description>
-        <pubDate>Thu, 11 Apr 2024 00:00:00 -0400</pubDate>
+        <pubDate>Thu, 11 Apr 2024 00:00:00 -0700</pubDate>
         <link>http://localhost:4000/math-cs-blog/April-problem-solving/</link>
         <guid isPermaLink="true">http://localhost:4000/math-cs-blog/April-problem-solving/</guid>
         
@@ -236,7 +384,7 @@ f(n, m - 1, k) + f(n - 1, m, k - 1) &amp;amp; \text{otherwise} \\
 
 &lt;p&gt;Bitmask DP + Berlekamp-Massey. Note that each $2 \times 2 \times 2 \times 2$ layer has to be filled up by itself or the layer that comes after it, so this gives a nice approach to compute the dp $f(l, mask, b)$ which represents $l$th layer, blocks that are on in $mask$ is filled up and we only used subset of blocks $1$, …, $b$ in this layer. This gives a $O(2^{16}2^5L)$ solution for the first $L$ layers which is not enough, so we need to use Berlekamp-Massey after computing the first $300$ values or so, then, we can find the linear recurrence.&lt;/p&gt;
 </description>
-        <pubDate>Sun, 11 Feb 2024 00:00:00 -0500</pubDate>
+        <pubDate>Sun, 11 Feb 2024 00:00:00 -0800</pubDate>
         <link>http://localhost:4000/math-cs-blog/February-problem-solving/</link>
         <guid isPermaLink="true">http://localhost:4000/math-cs-blog/February-problem-solving/</guid>
         
@@ -347,7 +495,7 @@ The overall time complexity will be $O(A + n\log A)$, where $A$ is the maximum p
 &lt;p&gt;The main observation is that for each $1 \leq i \leq N$, 
 the cardinality of the set $S_i := \{j \in [i - 1] \colon |h_j - h_i| &amp;gt; K\}$ is invariant under the given operation, so the idea for the solution is to take the smallest $h_i$ that satisfies $|S_i| = 0$, and remove $h_i$ from the remaining $S_j$’s. This can be done via square root decomposition or segment tree.&lt;/p&gt;
 </description>
-        <pubDate>Tue, 09 Jan 2024 00:00:00 -0500</pubDate>
+        <pubDate>Tue, 09 Jan 2024 00:00:00 -0800</pubDate>
         <link>http://localhost:4000/math-cs-blog/January-problem-solving/</link>
         <guid isPermaLink="true">http://localhost:4000/math-cs-blog/January-problem-solving/</guid>
         
@@ -465,7 +613,7 @@ Optimal is assuming that when every time someone comes online, the person has ye
 
 &lt;p&gt;The quality of each problem was amazing. I hope the following Div 1+2 rounds also have this high-quality problems.&lt;/p&gt;
 </description>
-        <pubDate>Sat, 23 Dec 2023 00:00:00 -0500</pubDate>
+        <pubDate>Sat, 23 Dec 2023 00:00:00 -0800</pubDate>
         <link>http://localhost:4000/math-cs-blog/CodeForces-Pinely-Round-3/</link>
         <guid isPermaLink="true">http://localhost:4000/math-cs-blog/CodeForces-Pinely-Round-3/</guid>
         
@@ -555,7 +703,7 @@ $O(N + Q)$ solution.&lt;/p&gt;
 
 &lt;/details&gt;
 </description>
-        <pubDate>Sat, 25 Feb 2023 00:00:00 -0500</pubDate>
+        <pubDate>Sat, 25 Feb 2023 00:00:00 -0800</pubDate>
         <link>http://localhost:4000/math-cs-blog/February-problems/</link>
         <guid isPermaLink="true">http://localhost:4000/math-cs-blog/February-problems/</guid>
         
@@ -586,7 +734,7 @@ string ending up at vertex $j$ in the AC Automaton.&lt;/p&gt;
 
 &lt;/details&gt;
 </description>
-        <pubDate>Sun, 15 Jan 2023 00:00:00 -0500</pubDate>
+        <pubDate>Sun, 15 Jan 2023 00:00:00 -0800</pubDate>
         <link>http://localhost:4000/math-cs-blog/Aho-Corasick-and-applications/</link>
         <guid isPermaLink="true">http://localhost:4000/math-cs-blog/Aho-Corasick-and-applications/</guid>
         
@@ -601,136 +749,11 @@ string ending up at vertex $j$ in the AC Automaton.&lt;/p&gt;
 a more organized person as my notes have been everywhere, very disorganized. Hopefully, this would change.
 Anyways, I will probably write things related to my studies, and competitive programming stuff.&lt;/p&gt;
 </description>
-        <pubDate>Thu, 05 Jan 2023 00:00:00 -0500</pubDate>
+        <pubDate>Thu, 05 Jan 2023 00:00:00 -0800</pubDate>
         <link>http://localhost:4000/math-cs-blog/first-post/</link>
         <guid isPermaLink="true">http://localhost:4000/math-cs-blog/first-post/</guid>
         
         <category>intro</category>
-        
-        
-      </item>
-    
-      <item>
-        <title>January Problem-solving (1)</title>
-        <description>&lt;p&gt;&lt;a href=&quot;https://atcoder.jp/contests/arc088/tasks/arc088_c&quot;&gt;ARC 88E Papple Sort&lt;/a&gt;&lt;/p&gt;
-
-&lt;details style=&quot;margin-bottom: 5%&quot;&gt;
-
-  &lt;summary&gt;Solution&lt;/summary&gt;
-
-  &lt;p&gt;Without loss of generality, let the length of the string be even.
-Consider for each character $c$, the set $S_c = \{i | s_i = c\}$. In the resulting palindrome, each index in $S_c$ is paired
-with another index in $S_c$. Since it is unideal to swap between two adjacent characters that are the same, the ordering of the indices
-in $S_c$ does not change. Hence, The smallest index gets paired with the largest index, and so on.
-Now, we can transform the given problem into the following problem: &lt;br /&gt;&lt;/p&gt;
-
-  &lt;p&gt;We have $k$ pairs with distinct left and right indices. We assign $0\sim k-1$ for each pair. If a pair gets
-assigned $i$, then $a_l = i, a_r = 2k - i$ for the array $a$ of size $2k$. What is the minimum number of inversion of $a$?&lt;/p&gt;
-
-  &lt;p&gt;Thinking of the pairs as intervals, it should be clear that for nested pairs, the inversion count is either 0 or 2,
-non-nested, intersecting pairs always have an inversion count of 1, and non-intersecting pairs always have an inversion count of 2.
-Hence, we have to minimize the inversion count for every nested pairs.&lt;/p&gt;
-
-  &lt;ul&gt;
-    &lt;li&gt;&lt;strong&gt;Lemma.&lt;/strong&gt; It is possible to obtain an inversion count of 0 for each nested pair.&lt;/li&gt;
-    &lt;li&gt;&lt;strong&gt;Proof.&lt;/strong&gt; Think of the pairs as vertices, and whenever a pair is nested in another pair, add a directed edge to it. Clearly,
-this digraph is acylic, so if we label the pairs accordingly to the topological sort, we can achieve the inversion count of 0.&lt;/li&gt;
-  &lt;/ul&gt;
-
-  &lt;p&gt;So, the problem is reduced down to calculating the total number of intersecting pairs, and non-intersecting pairs which
-can be solved using a BIT/Segment Tree in $\mathcal{O}(N\log N)$.&lt;/p&gt;
-
-  &lt;p&gt;For odd length strings, we can manually add the inversion count of the one character by iterating over the pairs.&lt;/p&gt;
-
-&lt;/details&gt;
-
-&lt;p&gt;&lt;a href=&quot;https://codeforces.com/contest/959/problem/F&quot;&gt;CodeForces Round #473 Div 2F&lt;/a&gt;&lt;/p&gt;
-
-&lt;details style=&quot;margin-bottom: 5%&quot;&gt;
-
-  &lt;summary&gt; Solution &lt;/summary&gt;
-
-  &lt;p&gt;Offline query, XOR Basis, and the Fundamental Theorem of Linear Algebra solves the problem
-(Technically, we could store the basis of each prefix since $|B|\leq 20$ as $a_i &amp;lt; 2^{20}$, and $N \leq 10^5$,
-so we could solve the queries online).
-We could think of the 20-bit integers as vectors in $\mathbb{Z}_2^{20}$, and this allows us
-to transform the problem into a straightforward linear algebra problem:&lt;/p&gt;
-
-  &lt;p&gt;Let $T:\mathbb{Z}_2^N\mapsto\mathbb{Z}_2^{20}$, $T(v_1, v_2, \ldots, v_N) = \oplus_{i = 1}^N v_ia_i.$
-Calculate the number of vector $u$, such that $Tu = x$.&lt;/p&gt;
-
-  &lt;p&gt;Clearly, if $x$ is not in the span of the basis of $a_1, a_2, \ldots, a_N$, $B$, the answer is zero.
-Now, suppose $Tu = x$. Then, if $Tv = x \implies T(u - v) = 0$, hence, the answer is the number of
-vectors in the null space of $T$. By the Fundamental Theorem of Linear Algebra, $\dim\operatorname{Null}(T) = 
-\dim V - \dim\operatorname{range}(T) = N - |B|$, hence, $|\operatorname{Null}(T)| = 2^{N - |B|}$.&lt;/p&gt;
-
-  &lt;p&gt;Calculating the basis of the prefix of $a$ can be done incrementally in $\mathcal{O}(\log\max a_i)$ and
-checking if $x$ is in the basis can be done in a similar fashion, which yields a $\mathcal{O}((N+Q)\log\max a_i)$
-solution.&lt;/p&gt;
-
-&lt;/details&gt;
-
-&lt;p&gt;&lt;a href=&quot;https://www.acmicpc.net/problem/14859&quot;&gt;BOJ 14859 Three-way Coprime&lt;/a&gt;&lt;/p&gt;
-
-&lt;details style=&quot;margin-bottom: 5%&quot;&gt;
-
-  &lt;summary&gt; Description (for those who can&apos;t read Korean) &lt;/summary&gt;
-
-  &lt;p&gt;Given a sequence of length $N, N \leq 10^5, a_1, a_2, \ldots, a_N$, $1 \leq a_i \leq 10^6$,
-count all triplets $(i, j, k), 1 \leq i &amp;lt; j &amp;lt; k \leq N$ that satisfies $\gcd(a_i, a_j, a_k) = 1$.&lt;/p&gt;
-
-&lt;/details&gt;
-
-&lt;details style=&quot;margin-bottom: 5%&quot;&gt;
-
-  &lt;summary&gt; Solution &lt;/summary&gt;
-
-  &lt;p&gt;Typical number theory approach where we iterate over the multiples of an integer.&lt;/p&gt;
-
-  &lt;p&gt;Let &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;freq&lt;/code&gt; be the frequency array, where &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;freq[i]&lt;/code&gt; stores $\vert\{j : i \vert a_j \}\vert$, and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;cnt[d]&lt;/code&gt; be
-the number of triplets $(i, j, k)$, such that $\gcd(a_i, a_j, a_k) = d$. Clearly, answer is &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;cnt[1]&lt;/code&gt;.&lt;/p&gt;
-
-\[cnt[d] = \binom{freq[i]}{3} - \sum_{j = 2}^{\left\lfloor\frac{\max a_i}{d}\right\rfloor} cnt[jd]\]
-
-&lt;/details&gt;
-
-&lt;p&gt;&lt;a href=&quot;https://www.acmicpc.net/problem/7966&quot;&gt;POI 2005 Template&lt;/a&gt;&lt;/p&gt;
-
-&lt;details style=&quot;margin-bottom: 5%&quot;&gt;
-
-  &lt;summary&gt; Solution &lt;/summary&gt;
-
-  &lt;p&gt;KMP + A bit of observations&lt;/p&gt;
-
-  &lt;p&gt;Possible templates of $S$ are itself and the templates of $S[0:\pi[|S| - 1] - 1]$.
-Note that if $\pi[|S| - 1] &amp;gt;= \frac{|S|}{2}$, then $S[0:\pi[|S| - 1] - 1]$ is indeed a template.
-So we only have to check when the value of the prefix function halves or more. It is clear that
-this can only happen $\mathcal{O}(\log |S|)$ times, so even with a naive $\mathcal{O}(|S|)$ checking,
-we get a $\mathcal{O}(|S|\log |S|)$ solution.&lt;/p&gt;
-
-&lt;/details&gt;
-
-&lt;p&gt;&lt;a href=&quot;https://codeforces.com/contest/1743/problem/F&quot;&gt;CodeForces Edu Round #137 F&lt;/a&gt;&lt;/p&gt;
-
-&lt;details style=&quot;margin-bottom: 5%&quot;&gt;
-
-  &lt;summary&gt; Solution &lt;/summary&gt;
-
-  &lt;p&gt;Contribution technique + Segment Tree storing matrices.&lt;/p&gt;
-
-  &lt;p&gt;It is easy to see that we could count the contribution of each integer in $0\dots 3\times 10^5$.
-For each integer, we could consider a dp, and the transition can be modelled using $2\times 2$
-matrices, suggesting we should use a segment tree. Also, transitioning from $i$ to $i + 1$ can be
-easily done by storing the indices of segments that have the left boundary as $i + 1$ or right boundary
-as $i$. This allows a $\mathcal{O}((N + MAX)\log N)$ with a constant factor of 8 for matrix multiplication.&lt;/p&gt;
-
-&lt;/details&gt;
-</description>
-        <pubDate>Thu, 05 Jan 2023 00:00:00 -0500</pubDate>
-        <link>http://localhost:4000/math-cs-blog/January-problems-1/</link>
-        <guid isPermaLink="true">http://localhost:4000/math-cs-blog/January-problems-1/</guid>
-        
-        <category>problem-solving</category>
         
         
       </item>
